@@ -24,16 +24,16 @@ app.post('/Person', async (req, res) => {
 
     //destructuring assignment
     //{name: "willianson", salary: 9999, approved: false}
-    const { name, salary, approved } = req.body;
+    const { name, salary, approved } = req.body
 
     if (!name) {
-        res.status(422).json({ error: 'o campo nome é obrigarório' })
+        return res.status(422).json({ error: 'o campo nome é obrigatório' })
     }
     if (!salary) {
-        res.status(422).json({ error: 'o campo salario é obrigarório' })
+        return res.status(422).json({ error: 'o campo salario é obrigatório' })
     }
-    if (!approved) {
-        res.status(422).json({ error: 'o campo salario é obrigarório' })
+    if (approved == null) {
+        return res.status(422).json({ error: 'o campo aprovado é obrigatório' })
     }
     const person = {
         name,
