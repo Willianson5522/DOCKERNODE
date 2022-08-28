@@ -14,13 +14,16 @@ router.post('/', async (req, res) => {
     const { name, salary, approved } = req.body
 
     if (!name) {
-        return res.status(422).json({ error: 'o campo nome é obrigatório' })
+        res.status(422).json({ error: 'o campo nome é obrigatório' })
+        return
     }
     if (!salary) {
-        return res.status(422).json({ error: 'o campo salario é obrigatório' })
+        res.status(422).json({ error: 'o campo salario é obrigatório' })
+        return
     }
     if (approved == null) {
-        return res.status(422).json({ error: 'o campo aprovado é obrigatório' })
+        res.status(422).json({ error: 'o campo aprovado é obrigatório' })
+        return
     }
     const person = {
         name,
@@ -52,9 +55,15 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     //extrair o dado da requisição pela URL = req.params
     const id = req.params.id;
-    
+
     try {
         const person = await Person.findOne({ _id: id })
+
+        if (!person) {
+            res.status(422).json({ message: 'o usuário não foi encontrado!' })
+            return
+        }
+
         res.status(200).json(person)
     } catch (error) {
         res.status(500).json({ error: error })
