@@ -5,7 +5,6 @@ const PORT = 3000;
 const HOST = '0.0.0.0';
 const app = express();
 require('dotenv').config();
-const Person = require('./models/Person');
 
 // forma de ler JSON - Middlewares
 app.use(
@@ -17,38 +16,9 @@ app.use(
 app.use(express.json());
 
 // rotas da API
-app.post('/Person', async (req, res) => {
+const personRoutes = require('./routes/personRoutes')
 
-    //req.body
-
-
-    //destructuring assignment
-    //{name: "willianson", salary: 9999, approved: false}
-    const { name, salary, approved } = req.body
-
-    if (!name) {
-        return res.status(422).json({ error: 'o campo nome é obrigatório' })
-    }
-    if (!salary) {
-        return res.status(422).json({ error: 'o campo salario é obrigatório' })
-    }
-    if (approved == null) {
-        return res.status(422).json({ error: 'o campo aprovado é obrigatório' })
-    }
-    const person = {
-        name,
-        salary,
-        approved
-    }
-
-    try {
-        //criando dados
-        await Person.create(person);
-        res.status(201).json({ message: 'Pessoa inserida no sistema com sucesso!' })
-    } catch (error) {
-        req.status(500).json({ error: error })
-    }
-})
+app.use('/person', personRoutes)
 
 // rota inicial / endpoint
 app.get('/', (req, res) => {
