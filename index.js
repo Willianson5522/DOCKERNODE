@@ -6,6 +6,7 @@ const PORT = 3000;
 const HOST = '0.0.0.0';
 const app = express();
 require('dotenv').config();
+const Person = require('./models/Person');
 
 // forma de ler JSON - Middlewares
 
