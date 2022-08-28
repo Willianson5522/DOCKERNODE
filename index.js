@@ -26,6 +26,15 @@ app.post('/Person', async (req, res) => {
     //{name: "willianson", salary: 9999, approved: false}
     const { name, salary, approved } = req.body;
 
+    if (!name) {
+        res.status(422).json({ error: 'o campo nome é obrigarório' })
+    }
+    if (!salary) {
+        res.status(422).json({ error: 'o campo salario é obrigarório' })
+    }
+    if (!approved) {
+        res.status(422).json({ error: 'o campo salario é obrigarório' })
+    }
     const person = {
         name,
         salary,
@@ -35,7 +44,7 @@ app.post('/Person', async (req, res) => {
     try {
         //criando dados
         await Person.create(person);
-        res.status(201).json({message: 'Pessoa inserida no sistema com sucesso!'})
+        res.status(201).json({ message: 'Pessoa inserida no sistema com sucesso!' })
     } catch (error) {
         req.status(500).json({ error: error })
     }
